@@ -14,7 +14,6 @@ onMount(() => {
     }
 })
 
-
 let username = ""
 let email = ""
 let password = ""
