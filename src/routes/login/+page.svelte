@@ -18,7 +18,8 @@ let username = ""
 let email = ""
 let password = ""
 let name = ""
-
+let s_username = ""
+let s_password = ""
 
 const createUser = async () => {
     // example create data
@@ -31,17 +32,21 @@ const createUser = async () => {
         "name": name
     };
 
-    await pb.collection('users').create(data);
+    await pb.collection('users').create(data)
+    .catch((e) => alert("Invalid Something, make sure it is a real email"))
+    .then(() => alert("SUCCESS, Now sign in"))
 }
 
 
 const login = async () => {
-    const authData = await pb.collection('users').authWithPassword(username, password);
+    try{
+        await pb.collection('users').authWithPassword(s_username, s_password);
+        alert("SUCESS")
+    } catch{
+        alert("Invalid Creds")
+    } 
 
-    // after the above you can also access the auth data from the authStore
-    console.log(pb.authStore.isValid);
-    console.log(pb.authStore.token);
-    // console.log(pb.authStore.model.id);
+    // alert(pb.authStore.isValid)
 }
 
 
@@ -70,8 +75,8 @@ const login = async () => {
 
         <div class="grid grid-cols-1 justify-items-center gap-5">
 
-            <input bind:value={username} type="text" placeholder="username" class="input input-bordered input-error w-full max-w-xs" />
-            <input bind:value={password} type="text" placeholder="password" class="input input-bordered input-error w-full max-w-xs" />
+            <input bind:value={s_username} type="text" placeholder="username" class="input input-bordered input-error w-full max-w-xs" />
+            <input bind:value={s_password} type="text" placeholder="password" class="input input-bordered input-error w-full max-w-xs" />
 
             <button on:click={login} class="btn btn-outline">Login</button>
             
